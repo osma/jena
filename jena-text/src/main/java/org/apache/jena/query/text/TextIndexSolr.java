@@ -28,6 +28,7 @@ import java.util.Map.Entry ;
 import org.apache.jena.graph.Node ;
 import org.apache.jena.graph.NodeFactory ;
 import org.apache.jena.sparql.util.NodeFactoryExtra ;
+import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery ;
 import org.apache.solr.client.solrj.SolrServer ;
 import org.apache.solr.client.solrj.SolrServerException ;
@@ -43,11 +44,13 @@ import org.slf4j.LoggerFactory ;
 public class TextIndexSolr implements TextIndex
 {
     private static final Logger log = LoggerFactory.getLogger(TextIndexSolr.class) ;
-    private final SolrServer solrServer ;
+//    private final SolrServer solrServer ;
+    private final SolrClient solrServer ; // jmv
     private final EntityDefinition docDef ;
     private static final int MAX_N    = 10000 ;
 
-    public TextIndexSolr(SolrServer server, EntityDefinition def) {
+    // public TextIndexSolr(SolrServer server, EntityDefinition def) {
+        public TextIndexSolr(SolrClient server, EntityDefinition def) { // jmv
         this.solrServer = server ;
         this.docDef = def ;
     }
@@ -224,7 +227,8 @@ public class TextIndexSolr implements TextIndex
             SolrDocumentList docs = rsp.getResults() ;
             return docs ;
         }
-        catch (SolrServerException e) {
+        catch (SolrServerException | IOException e) { // jmv
+//          catch (IOException e) { // jmv
             exception(e) ;
             return null ;
         }
@@ -240,7 +244,8 @@ public class TextIndexSolr implements TextIndex
         return NodeFactoryExtra.createLiteralNode(v, null, null) ;
     }
 
-    public SolrServer getServer() {
+//    public SolrServer getServer() {
+    public SolrClient getServer() { // jmv
         return solrServer ;
     }
 

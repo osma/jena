@@ -18,7 +18,7 @@
 
 package org.apache.jena.query.text.analyzer ;
 
-import java.io.Reader ;
+//import java.io.Reader ;
 import java.util.List ;
 
 import org.apache.jena.query.text.TextIndexException;
@@ -42,20 +42,20 @@ import org.apache.lucene.util.Version ;
  */
 
 public class ConfigurableAnalyzer extends Analyzer {
-        private final Version version;
+        private final Version version; // jmv to remove?
         private final String tokenizer;
         private final List<String> filters;
         
-        private Tokenizer getTokenizer(String tokenizerName, Reader reader) {
+        private Tokenizer getTokenizer(String tokenizerName) { // jmv , Reader reader) {
                 switch(tokenizerName) {
                         case "KeywordTokenizer":
-                                return new KeywordTokenizer(reader);
+                                return new KeywordTokenizer(); // jmv reader);
                         case "LetterTokenizer":
-                                return new LetterTokenizer(version, reader);
+                                return new LetterTokenizer(); // jmv version, reader);
                         case "StandardTokenizer":
-                                return new StandardTokenizer(version, reader);
+                                return new StandardTokenizer(); // jmv version, reader);
                         case "WhitespaceTokenizer":
-                                return new WhitespaceTokenizer(version, reader);
+                                return new WhitespaceTokenizer(); // jmv version, reader);
                         default:
                                 throw new TextIndexException("Unknown tokenizer : " + tokenizerName);
                 }
@@ -64,11 +64,11 @@ public class ConfigurableAnalyzer extends Analyzer {
         private TokenFilter getTokenFilter(String filterName, TokenStream source) {
                 switch(filterName) {
                         case "ASCIIFoldingFilter":
-                                return new ASCIIFoldingFilter(source);
+                                return new ASCIIFoldingFilter(source); // jmv
                         case "LowerCaseFilter":
-                                return new LowerCaseFilter(version, source);
+                                return new LowerCaseFilter(source); // jmv
                         case "StandardFilter":
-                                return new StandardFilter(version, source);
+                                return new StandardFilter(source); // jmv
                         default:
                                 throw new TextIndexException("Unknown filter : " + filterName);
                 }
@@ -81,8 +81,8 @@ public class ConfigurableAnalyzer extends Analyzer {
         }
 
         @Override
-        protected TokenStreamComponents createComponents(String fieldName, Reader reader) {
-                Tokenizer source = getTokenizer(this.tokenizer, reader);
+        protected TokenStreamComponents createComponents(String fieldName) { // jmv , Reader reader) {
+                Tokenizer source = getTokenizer(this.tokenizer); // jmv , reader);
                 TokenStream stream = source;
                 for (String filter : this.filters) {
                         stream = getTokenFilter(filter, stream);

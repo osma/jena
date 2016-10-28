@@ -54,7 +54,7 @@ public class LocalizedAnalyzerAssembler extends AssemblerBase {
             String lang = node.toString();
             return Util.getLocalizedAnalyzer(lang, TextIndexLucene.VER);
         } else {
-            return new StandardAnalyzer(TextIndexLucene.VER);
+            return new StandardAnalyzer();
         }
     }
 }
