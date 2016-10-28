@@ -20,6 +20,8 @@ package org.apache.jena.query.text;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.apache.jena.atlas.io.IO ;
 import org.apache.lucene.analysis.Analyzer;
@@ -32,7 +34,7 @@ import org.apache.lucene.util.Version;
 
 public class TextSearchUtil {
     private static Version VER = TextIndexLucene.VER ;
-    private static final Analyzer analyzer = new StandardAnalyzer(VER);
+    private static final Analyzer analyzer = new StandardAnalyzer(); // VER); jmv
 
     public static void emptyAndDeleteDirectory(File dir) {
         File[] contents = dir.listFiles() ;
@@ -50,8 +52,9 @@ public class TextSearchUtil {
 
     public static void createEmptyIndex(File indexDir) {
         try {
-            Directory directory = FSDirectory.open(indexDir) ;
-            IndexWriterConfig wConfig = new IndexWriterConfig(VER, analyzer) ;
+        	Path indexDirPath = Paths.get(indexDir.getCanonicalPath()); // jmv
+            Directory directory = FSDirectory.open(indexDirPath) ;
+            IndexWriterConfig wConfig = new IndexWriterConfig(analyzer) ; // jmv
             // force creation of the index files
             try(IndexWriter indexWriter = new IndexWriter(directory, wConfig)) {
             }

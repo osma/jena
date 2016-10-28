@@ -51,7 +51,7 @@ public class TextIndexLucene implements TextIndex {
     private static Logger          log      = LoggerFactory.getLogger(TextIndexLucene.class) ;
 
     private static int             MAX_N    = 10000 ;
-    public static final Version    VER      = Version.LUCENE_4_9 ;
+    public static final Version    VER      = Version.LUCENE_5_5_3; // jmv 4_9 ;
     // prefix for storing datatype URIs in the index, to distinguish them from language tags
     private static final String    DATATYPE_PREFIX = "^^";
 
@@ -60,7 +60,8 @@ public class TextIndexLucene implements TextIndex {
         ftIRI = new FieldType() ;
         ftIRI.setTokenized(false) ;
         ftIRI.setStored(true) ;
-        ftIRI.setIndexed(true) ;
+//        ftIRI.setIndexed(true) ; // jmv
+        ftIRI.setIndexOptions(IndexOptions.DOCS) ; // jmv
         ftIRI.freeze() ;
     }
     public static final FieldType  ftString = StringField.TYPE_NOT_STORED ;
@@ -105,7 +106,7 @@ public class TextIndexLucene implements TextIndex {
         }
 
         this.analyzer = new PerFieldAnalyzerWrapper(
-                (null != config.getAnalyzer()) ? config.getAnalyzer() : new StandardAnalyzer(VER), analyzerPerField) ;
+                (null != config.getAnalyzer()) ? config.getAnalyzer() : new StandardAnalyzer(), analyzerPerField) ;
         this.queryAnalyzer = (null != config.getQueryAnalyzer()) ? config.getQueryAnalyzer() : this.analyzer ;
         this.queryParserType = config.getQueryParser() ;
         this.ftText = config.isValueStored() ? TextField.TYPE_STORED : TextField.TYPE_NOT_STORED ;
@@ -116,7 +117,7 @@ public class TextIndexLucene implements TextIndex {
     }
 
     private void openIndexWriter() {
-        IndexWriterConfig wConfig = new IndexWriterConfig(VER, analyzer) ;
+        IndexWriterConfig wConfig = new IndexWriterConfig(analyzer) ;
         try
         {
             indexWriter = new IndexWriter(directory, wConfig) ;
@@ -296,14 +297,14 @@ public class TextIndexLucene implements TextIndex {
     private QueryParser getQueryParser(Analyzer analyzer) {
         switch(queryParserType) {
             case "QueryParser":
-                return new QueryParser(VER, docDef.getPrimaryField(), analyzer) ;
+                return new QueryParser(docDef.getPrimaryField(), analyzer) ;
             case "AnalyzingQueryParser":
-                return new AnalyzingQueryParser(VER, docDef.getPrimaryField(), analyzer) ;
+                return new AnalyzingQueryParser(docDef.getPrimaryField(), analyzer) ;
             case "ComplexPhraseQueryParser":
-                return new ComplexPhraseQueryParser(VER, docDef.getPrimaryField(), analyzer);
+                return new ComplexPhraseQueryParser(docDef.getPrimaryField(), analyzer);
             default:
                 log.warn("Unknown query parser type '" + queryParserType + "'. Defaulting to standard QueryParser") ;
-                return new QueryParser(VER, docDef.getPrimaryField(), analyzer) ;
+                return new QueryParser(docDef.getPrimaryField(), analyzer) ;
         }
     }
 

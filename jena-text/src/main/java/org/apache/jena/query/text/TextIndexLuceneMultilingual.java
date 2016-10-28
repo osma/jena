@@ -48,10 +48,10 @@ public class TextIndexLuceneMultilingual extends TextIndexLucene {
     protected void updateDocument(Entity entity) throws IOException {
         Document doc = doc(entity);
         Term term = new Term(getDocDef().getEntityField(), entity.getId());
-        Analyzer analyzer = Util.getLocalizedAnalyzer(entity.getLanguage());
-        if (analyzer == null)
-            analyzer = getAnalyzer();
-        getIndexWriter().updateDocument(term, doc, analyzer) ;
+//        Analyzer analyzer = Util.getLocalizedAnalyzer(entity.getLanguage());
+//        if (analyzer == null)
+//            analyzer = getAnalyzer();
+        getIndexWriter().updateDocument(term, doc.getFields()); // jmv , analyzer) ;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class TextIndexLuceneMultilingual extends TextIndexLucene {
         Analyzer analyzer = Util.getLocalizedAnalyzer(entity.getLanguage());
         if (analyzer == null)
             analyzer = getAnalyzer();
-        getIndexWriter().addDocument(doc, analyzer) ;
+        getIndexWriter().addDocument(doc.getFields()); // jmv , analyzer) ;
     }
 
     @Override

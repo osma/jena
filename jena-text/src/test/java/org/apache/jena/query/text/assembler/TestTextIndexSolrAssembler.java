@@ -20,11 +20,13 @@ package org.apache.jena.query.text.assembler;
 
 import static org.junit.Assert.assertEquals ;
 import static org.junit.Assert.assertTrue ;
+
 import org.apache.jena.assembler.Assembler ;
 import org.apache.jena.query.text.TextIndexSolr ;
 import org.apache.jena.rdf.model.Resource ;
 import org.apache.jena.vocabulary.RDF ;
 import org.apache.jena.vocabulary.RDFS ;
+import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.impl.HttpSolrServer ;
 import org.junit.Test ;
 
@@ -47,7 +49,7 @@ public class TestTextIndexSolrAssembler extends AbstractTestTextAssembler {
     
     @Test public void testIndexUsesHttpServer() {
         TextIndexSolr indexSolr = (TextIndexSolr) Assembler.general.open(HTTP_SOLR_INDEX_SPEC);
-        assertTrue(indexSolr.getServer() instanceof HttpSolrServer);
+        assertTrue(indexSolr.getServer() instanceof HttpSolrClient); // jmv HttpSolrServer);
         assertEquals(indexSolr.getDocDef().getPrimaryPredicate(), RDFS.label.asNode());    
         indexSolr.getServer().shutdown();
     }

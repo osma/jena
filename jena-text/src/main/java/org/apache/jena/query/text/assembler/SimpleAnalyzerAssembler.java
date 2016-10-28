@@ -43,6 +43,6 @@ public class SimpleAnalyzerAssembler extends AssemblerBase {
 
     @Override
     public Analyzer open(Assembler a, Resource root, Mode mode) {
-        return new SimpleAnalyzer(TextIndexLucene.VER);
+        return new SimpleAnalyzer();
     }
 }

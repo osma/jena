@@ -18,8 +18,6 @@
 
 package org.apache.jena.query.text.analyzer ;
 
-import java.io.Reader ;
-
 import org.apache.lucene.analysis.Analyzer ;
 import org.apache.lucene.analysis.core.KeywordTokenizer ;
 import org.apache.lucene.analysis.core.LowerCaseFilter ;
@@ -40,9 +38,9 @@ public class LowerCaseKeywordAnalyzer extends Analyzer {
         }
 
         @Override
-        protected TokenStreamComponents createComponents(String fieldName, Reader reader) {
-                KeywordTokenizer source = new KeywordTokenizer(reader);
-                LowerCaseFilter filter = new LowerCaseFilter(version, source);
+        protected TokenStreamComponents createComponents(String fieldName) {
+                KeywordTokenizer source = new KeywordTokenizer();
+                LowerCaseFilter filter = new LowerCaseFilter(source);
                 return new TokenStreamComponents(source, filter);
         }
 
