@@ -18,7 +18,6 @@
 
 package org.apache.jena.query.text.assembler ;
 
-import java.io.File ;
 import java.io.IOException ;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -50,7 +49,7 @@ public class TextIndexLuceneAssembler extends AssemblerBase {
         .
     */
     
-    @SuppressWarnings("resource")
+//    @SuppressWarnings("resource")
     @Override
     public TextIndex open(Assembler a, Resource root, Mode mode) {
         try {
@@ -65,16 +64,14 @@ public class TextIndexLuceneAssembler extends AssemblerBase {
                 if (literalValue.equals("mem")) {
                     directory = new RAMDirectory() ;
                 } else {
-//                    File dir = new File(literalValue) ; // jmv 
                     Path path = Paths.get(literalValue) ;
-                    directory = FSDirectory.open(path); // jmv dir) ;
+                    directory = FSDirectory.open(path) ;
                 }
             } else {
                 Resource x = n.asResource() ;
                 String path = IRILib.IRIToFilename(x.getURI()) ;
-//                File dir = new File(path) ;
                 Path path1 = Paths.get(path) ;
-                directory = FSDirectory.open(path1); // jmv dir) ;
+                directory = FSDirectory.open(path1) ;
             }
 
             Analyzer analyzer = null;

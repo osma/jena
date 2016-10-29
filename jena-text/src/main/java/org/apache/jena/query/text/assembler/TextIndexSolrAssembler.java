@@ -47,8 +47,7 @@ public class TextIndexSolrAssembler extends AssemblerBase
     @Override
     public TextIndex open(Assembler a, Resource root, Mode mode) {
         String uri = GraphUtils.getResourceValue(root, pServer).getURI() ;
-//        SolrServer server ; // jmv
-        SolrClient server ; // jmv
+        SolrClient server ;
         if ( uri.startsWith("embedded:") ) {
             throw new TextIndexException("Embedded Solr server not supported (change code and dependencies to enable)") ;
 //            String coreName = uri.substring("embedded:".length()) ;
@@ -59,7 +58,7 @@ public class TextIndexSolrAssembler extends AssemblerBase
 //            server = new EmbeddedSolrServer(coreContainer, coreName);
         } 
         else if ( uri.startsWith("http://") )
-            server = new org.apache.solr.client.solrj.impl.HttpSolrClient(uri); // HttpSolrServer( uri ); // jmv
+            server = new org.apache.solr.client.solrj.impl.HttpSolrClient(uri);
         else
             throw new TextIndexException("URI for the server must begin 'http://'") ;
         

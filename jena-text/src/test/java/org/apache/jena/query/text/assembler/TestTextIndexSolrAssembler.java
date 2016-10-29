@@ -49,7 +49,7 @@ public class TestTextIndexSolrAssembler extends AbstractTestTextAssembler {
     
     @Test public void testIndexUsesHttpServer() {
         TextIndexSolr indexSolr = (TextIndexSolr) Assembler.general.open(HTTP_SOLR_INDEX_SPEC);
-        assertTrue(indexSolr.getServer() instanceof HttpSolrClient); // jmv HttpSolrServer);
+        assertTrue(indexSolr.getServer() instanceof HttpSolrClient);
         assertEquals(indexSolr.getDocDef().getPrimaryPredicate(), RDFS.label.asNode());    
         indexSolr.getServer().shutdown();
     }

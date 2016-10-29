@@ -51,7 +51,7 @@ public class TextIndexLucene implements TextIndex {
     private static Logger          log      = LoggerFactory.getLogger(TextIndexLucene.class) ;
 
     private static int             MAX_N    = 10000 ;
-    public static final Version    VER      = Version.LUCENE_5_5_3; // jmv 4_9 ;
+    public static final Version    VER      = Version.LUCENE_5_5_3 ;
     // prefix for storing datatype URIs in the index, to distinguish them from language tags
     private static final String    DATATYPE_PREFIX = "^^";
 
@@ -60,8 +60,7 @@ public class TextIndexLucene implements TextIndex {
         ftIRI = new FieldType() ;
         ftIRI.setTokenized(false) ;
         ftIRI.setStored(true) ;
-//        ftIRI.setIndexed(true) ; // jmv
-        ftIRI.setIndexOptions(IndexOptions.DOCS) ; // jmv
+        ftIRI.setIndexOptions(IndexOptions.DOCS) ;
         ftIRI.freeze() ;
     }
     public static final FieldType  ftString = StringField.TYPE_NOT_STORED ;

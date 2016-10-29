@@ -30,11 +30,10 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.util.Version;
 
 public class TextSearchUtil {
-    private static Version VER = TextIndexLucene.VER ;
-    private static final Analyzer analyzer = new StandardAnalyzer(); // VER); jmv
+//    private static Version VER = TextIndexLucene.VER ;
+    private static final Analyzer analyzer = new StandardAnalyzer() ;
 
     public static void emptyAndDeleteDirectory(File dir) {
         File[] contents = dir.listFiles() ;
@@ -52,9 +51,9 @@ public class TextSearchUtil {
 
     public static void createEmptyIndex(File indexDir) {
         try {
-        	Path indexDirPath = Paths.get(indexDir.getCanonicalPath()); // jmv
+            Path indexDirPath = Paths.get(indexDir.getCanonicalPath()) ;
             Directory directory = FSDirectory.open(indexDirPath) ;
-            IndexWriterConfig wConfig = new IndexWriterConfig(analyzer) ; // jmv
+            IndexWriterConfig wConfig = new IndexWriterConfig(analyzer) ;
             // force creation of the index files
             try(IndexWriter indexWriter = new IndexWriter(directory, wConfig)) {
             }

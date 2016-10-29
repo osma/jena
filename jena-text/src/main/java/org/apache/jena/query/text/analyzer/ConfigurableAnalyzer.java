@@ -42,20 +42,20 @@ import org.apache.lucene.util.Version ;
  */
 
 public class ConfigurableAnalyzer extends Analyzer {
-        private final Version version; // jmv to remove?
+//        private final Version version; // version unused with Lucene 5.5.3
         private final String tokenizer;
         private final List<String> filters;
         
-        private Tokenizer getTokenizer(String tokenizerName) { // jmv , Reader reader) {
+        private Tokenizer getTokenizer(String tokenizerName) {
                 switch(tokenizerName) {
                         case "KeywordTokenizer":
-                                return new KeywordTokenizer(); // jmv reader);
+                                return new KeywordTokenizer();
                         case "LetterTokenizer":
-                                return new LetterTokenizer(); // jmv version, reader);
+                                return new LetterTokenizer();
                         case "StandardTokenizer":
-                                return new StandardTokenizer(); // jmv version, reader);
+                                return new StandardTokenizer();
                         case "WhitespaceTokenizer":
-                                return new WhitespaceTokenizer(); // jmv version, reader);
+                                return new WhitespaceTokenizer();
                         default:
                                 throw new TextIndexException("Unknown tokenizer : " + tokenizerName);
                 }
@@ -64,25 +64,25 @@ public class ConfigurableAnalyzer extends Analyzer {
         private TokenFilter getTokenFilter(String filterName, TokenStream source) {
                 switch(filterName) {
                         case "ASCIIFoldingFilter":
-                                return new ASCIIFoldingFilter(source); // jmv
+                                return new ASCIIFoldingFilter(source);
                         case "LowerCaseFilter":
-                                return new LowerCaseFilter(source); // jmv
+                                return new LowerCaseFilter(source);
                         case "StandardFilter":
-                                return new StandardFilter(source); // jmv
+                                return new StandardFilter(source);
                         default:
                                 throw new TextIndexException("Unknown filter : " + filterName);
                 }
         }
         
         public ConfigurableAnalyzer(Version ver, String tokenizer, List<String> filters) {
-                this.version = ver;
+//                this.version = ver;
                 this.tokenizer = tokenizer;
                 this.filters = filters;
         }
 
         @Override
-        protected TokenStreamComponents createComponents(String fieldName) { // jmv , Reader reader) {
-                Tokenizer source = getTokenizer(this.tokenizer); // jmv , reader);
+        protected TokenStreamComponents createComponents(String fieldName) {
+                Tokenizer source = getTokenizer(this.tokenizer);
                 TokenStream stream = source;
                 for (String filter : this.filters) {
                         stream = getTokenFilter(filter, stream);
