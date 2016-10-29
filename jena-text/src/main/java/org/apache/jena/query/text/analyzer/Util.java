@@ -48,8 +48,8 @@ public class Util {
             Class<?> className = analyzersClasses.get(lang);
             if (className == null)
                 return null;
-            Constructor<?> constructor = className.getConstructor() ; // jmv Version.class);
-            Analyzer analyzer = (Analyzer)constructor.newInstance() ; // jmv ver);
+            Constructor<?> constructor = className.getConstructor();
+            Analyzer analyzer = (Analyzer)constructor.newInstance();
             cache.put(lang, analyzer);
             return analyzer;
         } catch (Exception e) {

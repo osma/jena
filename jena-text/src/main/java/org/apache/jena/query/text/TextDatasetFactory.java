@@ -28,7 +28,6 @@ import org.apache.jena.system.JenaSystem ;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.store.Directory ;
 import org.apache.solr.client.solrj.SolrClient;
-//import org.apache.solr.client.solrj.SolrServer ;
 
 public class TextDatasetFactory
 {
@@ -181,15 +180,13 @@ public class TextDatasetFactory
     }
 
     /** Create a text-indexed dataset, using Solr */ 
-//    public static Dataset createSolrIndex(Dataset base, SolrServer server, EntityDefinition entMap)
-    public static Dataset createSolrIndex(Dataset base, SolrClient server, EntityDefinition entMap) // jmv
+    public static Dataset createSolrIndex(Dataset base, SolrClient server, EntityDefinition entMap)
     {
         TextIndex index = createSolrIndex(server, entMap) ;
         return create(base, index, true) ; 
     }
 
     /** Create a text-indexed dataset, using Solr */ 
-//    public static DatasetGraph createSolrIndex(DatasetGraph base, SolrServer server, EntityDefinition entMap)
     public static DatasetGraph createSolrIndex(DatasetGraph base, SolrClient server, EntityDefinition entMap)
     {
         TextIndex index = createSolrIndex(server, entMap) ;

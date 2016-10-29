@@ -49,7 +49,7 @@ public class TestLuceneWithMultipleThreads
         entDef = new EntityDefinition("uri", "label");
         entDef.setGraphField("graph");
         entDef.setPrimaryPredicate(RDFS.label);
-        StandardAnalyzer analyzer = new StandardAnalyzer(); // jmv Version.LUCENE_4_9);
+        StandardAnalyzer analyzer = new StandardAnalyzer();
         entDef.setAnalyzer("label", analyzer);
     }
     
