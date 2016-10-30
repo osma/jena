@@ -21,13 +21,14 @@ package org.apache.jena.query.text.assembler;
 import static org.junit.Assert.assertEquals ;
 import static org.junit.Assert.assertTrue ;
 
+import java.io.IOException;
+
 import org.apache.jena.assembler.Assembler ;
 import org.apache.jena.query.text.TextIndexSolr ;
 import org.apache.jena.rdf.model.Resource ;
 import org.apache.jena.vocabulary.RDF ;
 import org.apache.jena.vocabulary.RDFS ;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
-import org.apache.solr.client.solrj.impl.HttpSolrServer ;
 import org.junit.Test ;
 
 public class TestTextIndexSolrAssembler extends AbstractTestTextAssembler {
@@ -47,11 +48,11 @@ public class TestTextIndexSolrAssembler extends AbstractTestTextAssembler {
 //        indexSolr.getServer().shutdown();
 //    }
     
-    @Test public void testIndexUsesHttpServer() {
+    @Test public void testIndexUsesHttpServer() throws IOException {
         TextIndexSolr indexSolr = (TextIndexSolr) Assembler.general.open(HTTP_SOLR_INDEX_SPEC);
         assertTrue(indexSolr.getServer() instanceof HttpSolrClient);
         assertEquals(indexSolr.getDocDef().getPrimaryPredicate(), RDFS.label.asNode());    
-        indexSolr.getServer().shutdown();
+        indexSolr.getServer().close();
     }
     
     static {

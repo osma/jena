@@ -19,6 +19,7 @@
 package org.apache.jena.query.text;
 
 import java.io.File ;
+import java.io.IOException;
 
 import org.junit.After ;
 import org.junit.Before ;
@@ -40,9 +41,9 @@ public class TestDatasetWithEmbeddedSolrTextIndex extends AbstractTestDatasetWit
     }
 
     @After
-    public void after() {
+    public void after() throws IOException {
         TextIndexSolr index = (TextIndexSolr) dataset.getContext().get(TextQuery.textIndex) ;
-        index.getServer().shutdown();
+        index.getServer().close();
         deleteOldFiles();
     }
 

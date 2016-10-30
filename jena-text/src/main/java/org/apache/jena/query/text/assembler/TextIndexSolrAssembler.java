@@ -31,8 +31,6 @@ import org.apache.jena.query.text.TextIndexException ;
 import org.apache.jena.rdf.model.Resource ;
 import org.apache.jena.sparql.util.graph.GraphUtils ;
 import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.client.solrj.SolrServer ;
-import org.apache.solr.client.solrj.impl.HttpSolrServer ;
 
 public class TextIndexSolrAssembler extends AssemblerBase
 {

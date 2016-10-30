@@ -67,6 +67,10 @@
 
     <ver.lucene>5.5.3</ver.lucene>
     <ver.solr>5.5.3</ver.solr>
+<!--
+    <ver.lucene>6.2.1</ver.lucene>
+    <ver.solr>6.2.1</ver.solr>
+-->
 
     <ver.spatial4j>0.5</ver.spatial4j>
 
