@@ -89,7 +89,12 @@ public class TextIndexSolr implements TextIndex
     @Override
     public void close() {
         if ( solrServer != null )
-            solrServer.shutdown() ;
+			try {
+				solrServer.close() ;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+//         solrServer.shutdown() ;
     }
 
     @Override
