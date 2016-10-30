@@ -67,11 +67,6 @@
 
     <ver.commons-codec>1.10</ver.commons-codec>
 
-    <!-- ver.lucene>4.9.1</ver.lucene 
-    <ver.lucene>5.5.3</ver.lucene>
-    <ver.lucene>4.10.3</ver.lucene>
-    <ver.solr>4.10.3</ver.solr>
-    -->
     <ver.lucene>5.5.3</ver.lucene>
     <ver.solr>5.5.3</ver.solr>
 

@@ -20,9 +20,6 @@ package org.apache.jena.query.text.analyzer ;
 
 import org.apache.lucene.analysis.Analyzer ;
 import org.apache.lucene.analysis.DelegatingAnalyzerWrapper;
-import java.lang.reflect.Constructor;
-import java.util.Hashtable;
-
 
 /** 
  * Lucene Analyzer implementation that delegates to a language-specific
