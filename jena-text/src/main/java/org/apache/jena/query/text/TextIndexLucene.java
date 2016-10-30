@@ -321,6 +321,7 @@ public class TextIndexLucene implements TextIndex {
         }
     }
 
+    /** if Multilingual, replace field name eg "label" with a name including language eg "label_en" */
     private Query parseQuery(String queryString, Analyzer analyzer) throws ParseException {
         if (this.isMultilingual) {
             if (queryString.contains(getDocDef().getLangField() + ":")) {
