@@ -20,6 +20,7 @@ package org.apache.jena.query.spatial.assembler;
 
 import static org.apache.jena.query.spatial.assembler.SpatialVocab.pDefinition ;
 import static org.apache.jena.query.spatial.assembler.SpatialVocab.pServer ;
+
 import org.apache.jena.assembler.Assembler ;
 import org.apache.jena.assembler.Mode ;
 import org.apache.jena.assembler.assemblers.AssemblerBase ;
@@ -29,8 +30,8 @@ import org.apache.jena.query.spatial.SpatialIndex ;
 import org.apache.jena.query.spatial.SpatialIndexException ;
 import org.apache.jena.rdf.model.Resource ;
 import org.apache.jena.sparql.util.graph.GraphUtils ;
-import org.apache.solr.client.solrj.SolrServer ;
-import org.apache.solr.client.solrj.impl.HttpSolrServer ;
+import org.apache.solr.client.solrj.SolrClient ;
+import org.apache.solr.client.solrj.impl.HttpSolrClient ;
 
 public class SpatialIndexSolrAssembler extends AssemblerBase {
 	/*
@@ -42,7 +43,7 @@ public class SpatialIndexSolrAssembler extends AssemblerBase {
 	@Override
 	public SpatialIndex open(Assembler a, Resource root, Mode mode) {
 		String uri = GraphUtils.getResourceValue(root, pServer).getURI();
-		SolrServer server;
+		SolrClient server;
 		if (uri.startsWith("embedded:")) {
 		    throw new SpatialIndexException("Embedded Solr server not supported (change code and dependencies to enable)") ;
 //			try {
@@ -69,7 +70,7 @@ public class SpatialIndexSolrAssembler extends AssemblerBase {
 //				// ;
 //			}
 		} else if (uri.startsWith("http://")) {
-			server = new HttpSolrServer(uri);
+			server = new HttpSolrClient(uri);
 		} else
 			throw new SpatialIndexException(
 					"URI for the server must begin 'http://'");

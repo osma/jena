@@ -35,7 +35,7 @@ import org.apache.jena.sparql.core.DatasetGraphFactory ;
 import org.apache.jena.vocabulary.RDFS ;
 import org.apache.lucene.analysis.standard.StandardAnalyzer ;
 import org.apache.lucene.store.RAMDirectory ;
-import org.apache.lucene.util.Version ;
+//import org.apache.lucene.util.Version ;
 import org.junit.Test ;
 
 /**

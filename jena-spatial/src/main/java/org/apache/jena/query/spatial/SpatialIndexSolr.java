@@ -18,6 +18,7 @@
 
 package org.apache.jena.query.spatial;
 
+import java.io.IOException;
 import java.util.ArrayList ;
 import java.util.List ;
 
@@ -28,8 +29,8 @@ import org.apache.lucene.spatial.prefix.RecursivePrefixTreeStrategy ;
 import org.apache.lucene.spatial.prefix.tree.GeohashPrefixTree ;
 import org.apache.lucene.spatial.prefix.tree.SpatialPrefixTree ;
 import org.apache.lucene.spatial.query.SpatialOperation ;
+import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery ;
-import org.apache.solr.client.solrj.SolrServer ;
 import org.apache.solr.client.solrj.SolrServerException ;
 import org.apache.solr.client.solrj.response.QueryResponse ;
 import org.apache.solr.common.SolrDocument ;
@@ -42,7 +43,7 @@ import com.spatial4j.core.shape.Shape ;
 
 public class SpatialIndexSolr implements SpatialIndex {
 	private static Logger log = LoggerFactory.getLogger(SpatialIndexSolr.class);
-	private final SolrServer solrServer;
+	private final SolrClient solrServer;
 	private EntityDefinition docDef;
 	private SpatialPrefixTree grid;
 
@@ -57,7 +58,7 @@ public class SpatialIndexSolr implements SpatialIndex {
 	 */
 	private SpatialStrategy strategy;
 
-	public SpatialIndexSolr(SolrServer server, EntityDefinition def) {
+	public SpatialIndexSolr(SolrClient server, EntityDefinition def) {
 		this.solrServer = server;
 		this.docDef = def;
 
@@ -154,6 +155,9 @@ public class SpatialIndexSolr implements SpatialIndex {
 		} catch (SolrServerException e) {
 			exception(e);
 			return null;
+		} catch (IOException e) {
+			exception(e);
+			return null;
 		}
 	}
 
@@ -167,7 +171,7 @@ public class SpatialIndexSolr implements SpatialIndex {
 		return NodeFactoryExtra.createLiteralNode(v, null, null);
 	}
 
-	public SolrServer getServer() {
+	public SolrClient getServer() {
 		return solrServer;
 	}
 

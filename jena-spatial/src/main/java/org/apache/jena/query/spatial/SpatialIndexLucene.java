@@ -50,14 +50,14 @@ public class SpatialIndexLucene implements SpatialIndex {
 			.getLogger(SpatialIndexLucene.class);
 
 	private static int MAX_N = 10000;
-	public static final Version VER = Version.LUCENE_4_9;
+	public static final Version VER = Version.LUCENE_5_5_3 ;
 
 	public static final FieldType ftIRI;
 	static {
 		ftIRI = new FieldType();
 		ftIRI.setTokenized(false);
 		ftIRI.setStored(true);
-		ftIRI.setIndexed(true);
+        ftIRI.setIndexOptions(IndexOptions.DOCS) ;
 		ftIRI.freeze();
 	}
 	// public static final FieldType ftText = TextField.TYPE_NOT_STORED ;
@@ -67,7 +67,7 @@ public class SpatialIndexLucene implements SpatialIndex {
 	private final EntityDefinition docDef;
 	private final Directory directory;
 	private IndexWriter indexWriter;
-	private Analyzer analyzer = new StandardAnalyzer(VER);
+	private Analyzer analyzer = new StandardAnalyzer();
 
 	/**
 	 * The Lucene spatial {@link SpatialStrategy} encapsulates an approach to
@@ -110,7 +110,7 @@ public class SpatialIndexLucene implements SpatialIndex {
 	@Override
 	public void startIndexing() {
 		try {
-			IndexWriterConfig wConfig = new IndexWriterConfig(VER, analyzer);
+			IndexWriterConfig wConfig = new IndexWriterConfig(analyzer);
 			indexWriter = new IndexWriter(directory, wConfig);
 		} catch (IOException e) {
 			exception(e);
