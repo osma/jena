@@ -193,6 +193,7 @@ public class SpatialIndexLucene implements SpatialIndex {
 			limit = MAX_N;
 
 		IndexSearcher indexSearcher = new IndexSearcher(indexReader);
+//		BooleanQuery indexSearcher = new BooleanQuery(indexReader); // IndexSearcher(indexReader);
 		Point pt = shape.getCenter();
 		ValueSource valueSource = strategy.makeDistanceValueSource(pt);// the
 																		// distance
@@ -202,8 +203,13 @@ public class SpatialIndexLucene implements SpatialIndex {
 				.rewrite(indexSearcher);
 		SpatialArgs args = new SpatialArgs(operation, shape);
 		args.setDistErr(0.0);
-		Filter filter = strategy.makeFilter(args);
-		TopDocs docs = indexSearcher.search(new MatchAllDocsQuery(), filter,
+//		Filter filter = strategy.makeFilter(args);
+		Query filter = strategy.makeQuery(args);
+//		TopDocs docs = indexSearcher.search(new MatchAllDocsQuery(), filter,
+//				limit, distSort);
+		TopDocs docs = indexSearcher.search(
+//				new MatchAllDocsQuery(),
+				filter,
 				limit, distSort);
 
 		List<Node> results = new ArrayList<>();
